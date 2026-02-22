@@ -4,7 +4,6 @@ const topBar = document.getElementById('top-bar');
 
 let lastScroll = 0;
 
-/* Default Dark Mode */
 const savedTheme = localStorage.getItem('theme');
 
 if (savedTheme === 'light') {
@@ -14,7 +13,6 @@ if (savedTheme === 'light') {
     icon.src = "DarkModeOn.png";
 }
 
-/* Scroll hide top bar */
 window.addEventListener('scroll', () => {
     const currentScroll = window.pageYOffset;
     if (currentScroll > lastScroll && currentScroll > 50) {
@@ -25,7 +23,6 @@ window.addEventListener('scroll', () => {
     lastScroll = currentScroll;
 });
 
-/* Toggle Theme */
 toggle.addEventListener('click', () => {
     document.body.classList.toggle('light-mode');
 

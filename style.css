@@ -1,22 +1,18 @@
-/* ===== RESET ===== */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+margin: 0;
+padding: 0;
+box-sizing: border-box;
 }
 
-/* ===== BODY ===== */
 body {
     font-family: Arial, Helvetica, sans-serif;
-    background: #1A1A1A; /* DARK DEFAULT */
+    background: #1A1A1A;
     color: #fff;
     line-height: 1.6;
-    scroll-behavior: smooth;
     padding-top: 80px;
     transition: background 0.4s ease, color 0.4s ease;
 }
 
-/* ===== TOP BAR ===== */
 #top-bar {
 position: fixed;
 top: 0;
@@ -39,7 +35,6 @@ transition: transform 0.4s ease;
     letter-spacing: 3px;
 }
 
-/* ===== DARK MODE BUTTON ===== */
 #dark-mode-toggle {
 position: absolute;
 right: 2rem;
@@ -51,14 +46,8 @@ cursor: pointer;
 #dark-mode-toggle img {
 width: 24px;
 height: 24px;
-transition: transform 0.3s ease;
 }
 
-#dark-mode-toggle:hover img {
-transform: scale(1.15);
-}
-
-/* ===== NAVIGATION ===== */
 .nav {
     display: flex;
     justify-content: center;
@@ -70,27 +59,20 @@ transform: scale(1.15);
     text-decoration: none;
     color: inherit;
     font-weight: bold;
-    transition: opacity 0.3s ease;
 }
 
-.nav a:hover {
-    opacity: 0.6;
-}
-
-/* ===== SECTIONS ===== */
 .section {
     padding: 6rem 10%;
     text-align: center;
 }
 
 .section h2 {
-    margin-bottom: 3rem;
+    margin-bottom: 2rem;
     border-bottom: 2px solid currentColor;
     display: inline-block;
     padding-bottom: 0.5rem;
 }
 
-/* ===== GRID ===== */
 .grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -101,25 +83,18 @@ transform: scale(1.15);
     padding: 2rem;
     background: #222;
     border: 2px solid #fff;
-    border-radius: 15px;
-    transition: transform 0.3s ease, background 0.3s ease;
+    border-radius: 12px;
 }
 
-.card:hover {
-    transform: translateY(-5px);
-    background: #fff;
-    color: #000;
-}
-
-/* ===== FOOTER ===== */
 footer {
-    margin-top: 6rem;
+    margin-top: 4rem;
     text-align: center;
     padding: 2rem;
     border-top: 2px solid currentColor;
 }
 
-/* ===== LIGHT MODE ===== */
+/* LIGHT MODE */
+
 body.light-mode {
     background: #F2F2F2;
     color: #1C1C1C;
@@ -133,11 +108,6 @@ body.light-mode #top-bar {
 body.light-mode .card {
     background: #fff;
     border-color: #000;
-}
-
-body.light-mode .card:hover {
-    background: #000;
-    color: #fff;
 }
 /* ===== GALLERY ===== */
 
@@ -180,6 +150,7 @@ body.light-mode .card:hover {
 .gallery-item:hover::after {
     opacity: 1;
 }
+
 /* ===== MOBILE RESPONSIVE ===== */
 @media (max-width: 768px) {
 
