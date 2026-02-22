@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Phantom Tale - Home</title>
+<title>Phantom Tale</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="icon" href="Icon.ico">
 <link rel="stylesheet" href="style.css">
@@ -12,7 +12,7 @@
 <header id="top-bar">
   <div class="bar-title">Phantom Tale</div>
   <button id="dark-mode-toggle">
-    <img id="theme-icon" src="DarkModeOn.png">
+    <img id="theme-icon" src="DarkModeOn.png" alt="Theme Icon">
   </button>
 </header>
 
@@ -24,12 +24,29 @@
   <a href="#contact">Contact</a>
 </nav>
 
+<!-- Hero Section -->
 <section class="hero">
   <h1>Building Games.<br>Designing Engines.</h1>
   <p>Indie game developer and engine creator with 10+ years of experience.<br>
      I’ve been making Unity games since 2016, and building custom engines since 2020.<br>
      I also explore 3D art and digital creativity.</p>
   <a href="projects.html" class="btn">View My Work</a>
+</section>
+
+<!-- Gallery Example -->
+<section class="section">
+  <h2>Gallery</h2>
+  <div class="gallery-grid">
+    <div class="gallery-item">
+      <img src="Screenshot_01.png" alt="Screenshot 1">
+    </div>
+    <div class="gallery-item">
+      <img src="Screenshot_02.png" alt="Screenshot 2">
+    </div>
+    <div class="gallery-item" data-type="video" data-src="https://www.youtube.com/embed/JE7c5SYaKdA?si=OX892HFA5D7WPDRG">
+      <iframe src="https://www.youtube.com/embed/JE7c5SYaKdA?si=OX892HFA5D7WPDRG" frameborder="0" allowfullscreen></iframe>
+    </div>
+  </div>
 </section>
 
 <section id="contact" class="section">
@@ -42,5 +59,44 @@
 </footer>
 
 <script src="script.js"></script>
+<script>
+// DARK MODE + SCROLL TOP BAR
+const toggle = document.getElementById('dark-mode-toggle');
+const icon = document.getElementById('theme-icon');
+const topBar = document.getElementById('top-bar');
+
+let lastScroll = 0;
+
+const savedTheme = localStorage.getItem('theme');
+
+if (savedTheme === 'light') {
+    document.body.classList.add('light-mode');
+    icon.src = "DarkModeOff.png";
+} else {
+    icon.src = "DarkModeOn.png";
+}
+
+window.addEventListener('scroll', () => {
+    const currentScroll = window.pageYOffset;
+    if (currentScroll > lastScroll && currentScroll > 50) {
+        topBar.style.transform = 'translateY(-100%)';
+    } else {
+        topBar.style.transform = 'translateY(0)';
+    }
+    lastScroll = currentScroll;
+});
+
+toggle.addEventListener('click', () => {
+    document.body.classList.toggle('light-mode');
+
+    if (document.body.classList.contains('light-mode')) {
+        icon.src = "DarkModeOff.png";
+        localStorage.setItem('theme', 'light');
+    } else {
+        icon.src = "DarkModeOn.png";
+        localStorage.setItem('theme', 'dark');
+    }
+});
+</script>
 </body>
 </html>
