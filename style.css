@@ -7,8 +7,8 @@
 
 body {
     font-family: Arial, Helvetica, sans-serif;
-    background: #fff;
-    color: #000;
+    background: #F2F2F2; /* light mode background */
+    color: #1C1C1C;       /* dark gray text */
     line-height: 1.6;
     scroll-behavior: smooth;
     padding-top: 80px;
@@ -22,7 +22,7 @@ top: 0;
 left: 0;
 width: 100%;
 height: 80px;
-background: #000; /* black in light mode */
+background: #000; /* black cinematic bar in light mode */
 color: #fff;
 display: flex;
 align-items: center;
@@ -67,7 +67,7 @@ transform: scale(1.2);
 
 .nav a {
     text-decoration: none;
-    color: #000;
+    color: #1C1C1C;
     font-weight: bold;
     transition: opacity 0.3s ease;
 }
@@ -101,6 +101,7 @@ transform: scale(1.2);
     border-radius: 10px;
     text-decoration: none;
     color: #000;
+    background: #fff;
     transition: all 0.4s ease;
 }
 
@@ -132,6 +133,7 @@ transform: scale(1.2);
 
 .card {
     padding: 2rem;
+    background: #fff;  /* light mode card background */
     border: 3px solid #000;
     border-radius: 15px;
     transition: background 0.5s ease, color 0.5s ease, transform 0.3s ease;
@@ -164,7 +166,7 @@ footer {
 
 /* Dark Mode Styles */
 body.dark-mode {
-    background: #1A1A1A; /* site background */
+    background: #1A1A1A; /* site background in dark mode */
     color: #fff;
 }
 
@@ -175,6 +177,7 @@ body.dark-mode .nav a {
 body.dark-mode .btn {
     border-color: #fff;
     color: #fff;
+    background: #1A1A1A;
 }
 
 body.dark-mode .btn:hover {
@@ -184,6 +187,7 @@ body.dark-mode .btn:hover {
 
 body.dark-mode .card {
     border-color: #fff;
+    background: #222;
 }
 
 body.dark-mode .dark {
@@ -192,6 +196,6 @@ body.dark-mode .dark {
 
 /* Top bar in dark mode */
 body.dark-mode #top-bar {
-    background: #030303; /* top bar color */
+    background: #030303; /* top bar color in dark mode */
     color: #fff;
 }
