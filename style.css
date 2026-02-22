@@ -248,3 +248,20 @@ body.light-mode .card {
         font-size: 0.9rem;
     }
 }
+.contact-links {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+
+.contact-links a img {
+    width: 40px;
+    height: 40px;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.contact-links a img:hover {
+    transform: scale(1.2);
+    opacity: 0.8;
+}
