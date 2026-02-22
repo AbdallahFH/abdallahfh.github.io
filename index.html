@@ -1,58 +1,94 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>Phantom Tale</title>
-  <link rel="icon" href="/Icon.ico" type="image/x-icon">
-  <style>
-    body { font-family: Arial, sans-serif; margin: 0; background: #111; color: #eee; }
-    header { background: #222; padding: 20px; text-align: center; }
-    header h1 { margin: 0; font-size: 2.5rem; color: #ffffff; }
-    nav a { color: #eee; margin: 0 15px; text-decoration: none; }
-    section { padding: 50px; text-align: center; }
-    .card { background: #222; padding: 20px; margin: 20px auto; max-width: 400px; border-radius: 10px; }
-    footer { background: #000; text-align: center; padding: 10px; }
-  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header>
-    <h1>Phantom Tale</h1>
-    <nav>
-      <a href="index.html">الرئيسية</a>
-      <a href="games.html">ألعابنا</a>
 
-      <a href="#about">من نحن</a>
-      <a href="#contact">تواصل</a>
-    </nav>
+  <!-- Top cinematic bar with centered title and dark mode button -->
+  <header id="top-bar">
+    <div class="bar-title">Phantom Tale</div>
+    <button id="dark-mode-toggle">🌙</button>
   </header>
 
-  <section id="games">
-    <h2>🎮 ألعابنا</h2>
-    <div class="card">
-      <h3>Post-Fire Revenge</h3>
-      <p>رحلة غامضة في عالم مظلم وغني بالقصص.</p>
-    </div>
-    <div class="card">
-      <h3>After The Disaster</h3>
-      <p>مغامرة بعد كارثة غير متوقعة.</p>
+  <!-- Navigation below top bar -->
+  <nav class="nav">
+    <a href="#projects">Projects</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <h1>Building Systems.<br>Designing Engines.</h1>
+    <p>Minimal. Efficient. Intentional.</p>
+    <a href="#projects" class="btn">View Work</a>
+  </section>
+
+  <!-- Projects -->
+  <section id="projects" class="section">
+    <h2>Selected Projects</h2>
+    <div class="grid">
+      <div class="card">
+        <h3>Game Engine</h3>
+        <p>Custom OpenGL engine focused on performance and clean architecture.</p>
+      </div>
+      <div class="card">
+        <h3>Rendering Research</h3>
+        <p>PBR pipeline, lighting experiments, and GPU optimization.</p>
+      </div>
+      <div class="card">
+        <h3>Systems Programming</h3>
+        <p>Low-level memory-aware design and engine tooling.</p>
+      </div>
     </div>
   </section>
 
-  <section id="about">
-    <h2>✨ من نحن</h2>
-    <p>Phantom Tale هو استوديو مستقل يهدف لصناعة ألعاب تحمل قصصًا ذات معنى وتجارب فريدة.</p>
-  </section>
-
-  <section id="contact">
-    <h2>📬 تواصل معنا</h2>
-    <p>البريد: contact@phantomtale.com</p>
+  <!-- About -->
+  <section id="about" class="section dark">
+    <h2>About</h2>
     <p>
-      <a href="#">YouTube</a> | <a href="#">Twitter</a>
+      Developer focused on rendering systems, engine architecture,
+      and performance-driven design.
     </p>
   </section>
 
-  <footer>
-    <p>© 2025 Phantom Tale</p>
+  <!-- Footer -->
+  <footer id="contact">
+    <p>© 2026 Phantom Tale</p>
   </footer>
+
+  <!-- Scroll & Dark Mode JS -->
+  <script>
+    const topBar = document.getElementById('top-bar');
+    const toggle = document.getElementById('dark-mode-toggle');
+    let lastScroll = 0;
+
+    // Hide top bar on scroll down
+    window.addEventListener('scroll', () => {
+      const currentScroll = window.pageYOffset;
+      if (currentScroll > lastScroll && currentScroll > 50) {
+        topBar.style.transform = 'translateY(-100%)';
+      } else {
+        topBar.style.transform = 'translateY(0)';
+      }
+      lastScroll = currentScroll;
+    });
+
+    // Dark mode toggle
+    toggle.addEventListener('click', () => {
+      document.body.classList.toggle('dark-mode');
+      if(document.body.classList.contains('dark-mode')) {
+        toggle.textContent = '☀️';
+      } else {
+        toggle.textContent = '🌙';
+      }
+    });
+  </script>
+
 </body>
 </html>
