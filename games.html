@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>ألعابنا - Phantom Tale</title>
+
+  <!-- أيقونات Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+    :root {
+      --bg: #111;
+      --text: #eee;
+      --card: #222;
+      --highlight: #ffcc00;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      transition: background 0.5s, color 0.5s;
+    }
+    header {
+      background: var(--card);
+      padding: 20px;
+      text-align: center;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 2rem;
+      color: var(--highlight);
+    }
+    nav a {
+      color: var(--text);
+      margin: 0 15px;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    nav a:hover {
+      color: var(--highlight);
+    }
+
+    section {
+      padding: 50px;
+      text-align: center;
+      animation: fadeIn 2s forwards;
+    }
+
+    .card {
+      background: var(--card);
+      padding: 20px;
+      margin: 20px auto;
+      max-width: 600px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(255, 204, 0, 0.3);
+      transform: translateY(50px);
+      opacity: 0;
+      animation: slideUp 1s forwards;
+    }
+
+    .card h2 {
+      color: var(--highlight);
+    }
+
+    .btn {
+      display: inline-block;
+      margin-top: 20px;
+      background: var(--highlight);
+      color: #111;
+      padding: 10px 20px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: transform 0.3s ease;
+    }
+    .btn:hover {
+      transform: scale(1.1);
+    }
+
+    footer {
+      background: #000;
+      text-align: center;
+      padding: 15px;
+    }
+    footer i {
+      margin: 0 10px;
+      font-size: 1.5rem;
+      color: var(--highlight);
+      transition: transform 0.3s;
+    }
+    footer i:hover {
+      transform: scale(1.2);
+      color: #fff;
+    }
+
+    /* Light Mode */
+    body.light {
+      --bg: #f9f9f9;
+      --text: #111;
+      --card: #fff;
+      --highlight: #d35400;
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+    @keyframes slideUp {
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    /* زر الأدوات */
+    .toolbar {
+      text-align: center;
+      margin: 15px;
+    }
+    .toolbar button {
+      margin: 0 10px;
+      padding: 8px 15px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- شريط الأدوات -->
+  <div class="toolbar">
+    <button onclick="toggleLang()"><i class="fa-solid fa-language"></i> اللغة</button>
+    <button onclick="toggleMode()"><i class="fa-solid fa-moon"></i> الوضع</button>
+  </div>
+
+  <!-- رأس الصفحة -->
+  <header>
+    <h1 id="title">Phantom Tale - ألعابنا</h1>
+    <nav>
+      <a id="home" href="index.html">الرئيسية</a>
+      <a id="games" href="games.html">ألعابنا</a>
+      <a id="about" href="about.html">من نحن</a>
+      <a id="contact" href="contact.html">تواصل</a>
+    </nav>
+  </header>
+
+  <!-- قسم اللعبة -->
+  <section>
+    <div class="card">
+      <h2 id="game-title"><i class="fa-solid fa-fire"></i> Post-Fire Revenge</h2>
+      <p id="game-desc">
+        بعد أن أكلت النيران كل شيء، تبدأ رحلة انتقامية مليئة بالغموض والخطر.  
+        لعبة تدمج بين البقاء، القتال، واستكشاف عالم ما بعد الكارثة.
+      </p>
+      <a href="#" class="btn" id="play-btn"><i class="fa-solid fa-play"></i> جرّب اللعبة</a>
+    </div>
+  </section>
+
+  <!-- الفوتر -->
+  <footer>
+    <p id="follow">تابعنا على</p>
+    <a href="#"><i class="fa-brands fa-youtube"></i></a>
+    <a href="#"><i class="fa-brands fa-twitter"></i></a>
+    <a href="https://discord.gg/4KazqRceby" target="_blank">
+      <i class="fa-brands fa-discord"></i>
+    </a>
+  </footer>
+
+  <script>
+    // نصوص عربية و إنجليزية
+    const texts = {
+      ar: {
+        title: "Phantom Tale - ألعابنا",
+        home: "الرئيسية",
+        games: "ألعابنا",
+        about: "من نحن",
+        contact: "تواصل",
+        gameTitle: "🔥 Post-Fire Revenge",
+        gameDesc: "بعد أن أكلت النيران كل شيء، تبدأ رحلة انتقامية مليئة بالغموض والخطر. لعبة تدمج بين البقاء، القتال، واستكشاف عالم ما بعد الكارثة.",
+        playBtn: "🎮 جرّب اللعبة",
+        follow: "تابعنا على"
+      },
+      en: {
+        title: "Phantom Tale - Our Games",
+        home: "Home",
+        games: "Games",
+        about: "About",
+        contact: "Contact",
+        gameTitle: "🔥 Post-Fire Revenge",
+        gameDesc: "After the fire consumed everything, a mysterious journey of revenge begins. A game that combines survival, combat, and exploring a post-apocalyptic world.",
+        playBtn: "🎮 Play Game",
+        follow: "Follow us on"
+      }
+    };
+
+    let currentLang = "ar";
+
+    function toggleLang() {
+      currentLang = currentLang === "ar" ? "en" : "ar";
+      const t = texts[currentLang];
+
+      document.getElementById("title").textContent = t.title;
+      document.getElementById("home").textContent = t.home;
+      document.getElementById("games").textContent = t.games;
+      document.getElementById("about").textContent = t.about;
+      document.getElementById("contact").textContent = t.contact;
+      document.getElementById("game-title").textContent = t.gameTitle;
+      document.getElementById("game-desc").textContent = t.gameDesc;
+      document.getElementById("play-btn").textContent = t.playBtn;
+      document.getElementById("follow").textContent = t.follow;
+
+      // اتجاه النصوص
+      document.documentElement.lang = currentLang;
+      document.documentElement.dir = currentLang === "ar" ? "rtl" : "ltr";
+    }
+
+    function toggleMode() {
+      document.body.classList.toggle("light");
+    }
+  </script>
+</body>
+</html>
