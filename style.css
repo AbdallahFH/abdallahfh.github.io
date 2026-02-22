@@ -1,130 +1,96 @@
-/* Reset */
+/* ===== RESET ===== */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+/* ===== BODY ===== */
 body {
     font-family: Arial, Helvetica, sans-serif;
-    background: #F2F2F2; /* light mode background */
-    color: #1C1C1C;       /* dark gray text */
+    background: #1A1A1A; /* DARK DEFAULT */
+    color: #fff;
     line-height: 1.6;
     scroll-behavior: smooth;
     padding-top: 80px;
-    transition: background 0.5s, color 0.5s;
+    transition: background 0.4s ease, color 0.4s ease;
 }
 
-/* Top cinematic bar */
+/* ===== TOP BAR ===== */
 #top-bar {
 position: fixed;
 top: 0;
 left: 0;
 width: 100%;
 height: 80px;
-background: #000; /* black cinematic bar in light mode */
+background: #030303;
 color: #fff;
 display: flex;
 align-items: center;
-justify-content: center; /* center title */
+justify-content: center;
 padding: 0 2rem;
 z-index: 1000;
-transition: transform 0.4s ease, background 0.5s;
+transition: transform 0.4s ease;
 }
 
-/* Title in top bar */
 .bar-title {
     font-size: 2rem;
     font-weight: 900;
     letter-spacing: 3px;
 }
 
-/* Dark mode button top right */
+/* ===== DARK MODE BUTTON ===== */
 #dark-mode-toggle {
 position: absolute;
 right: 2rem;
 background: transparent;
 border: none;
-font-size: 1.5rem;
-color: inherit;
 cursor: pointer;
+}
+
+#dark-mode-toggle img {
+width: 24px;
+height: 24px;
 transition: transform 0.3s ease;
 }
 
-#dark-mode-toggle:hover {
-transform: scale(1.2);
+#dark-mode-toggle:hover img {
+transform: scale(1.15);
 }
 
-/* Navigation below top bar */
+/* ===== NAVIGATION ===== */
 .nav {
     display: flex;
     justify-content: center;
     gap: 2rem;
     padding: 1rem 0;
-    position: relative;
-    margin-top: 10px;
 }
 
 .nav a {
     text-decoration: none;
-    color: #1C1C1C;
+    color: inherit;
     font-weight: bold;
     transition: opacity 0.3s ease;
 }
 
 .nav a:hover {
-    opacity: 0.5;
+    opacity: 0.6;
 }
 
-/* Hero */
-.hero {
-    text-align: center;
-    padding: 6rem 10%;
-}
-
-.hero h1 {
-    font-size: 3rem;
-    font-weight: 600;
-    margin-bottom: 1rem;
-}
-
-.hero p {
-    font-size: 1.1rem;
-    margin-bottom: 2rem;
-    opacity: 0.7;
-}
-
-.btn {
-    display: inline-block;
-    padding: 0.8rem 2rem;
-    border: 3px solid #000;
-    border-radius: 10px;
-    text-decoration: none;
-    color: #000;
-    background: #fff;
-    transition: all 0.4s ease;
-}
-
-.btn:hover {
-    background: #000;
-    color: #fff;
-}
-
-/* Sections */
+/* ===== SECTIONS ===== */
 .section {
     padding: 6rem 10%;
+    text-align: center;
 }
 
 .section h2 {
-    font-size: 2rem;
     margin-bottom: 3rem;
-    border-bottom: 3px solid #000;
+    border-bottom: 2px solid currentColor;
     display: inline-block;
     padding-bottom: 0.5rem;
-    border-radius: 5px;
 }
 
-/* Grid */
+/* ===== GRID ===== */
 .grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -133,69 +99,84 @@ transform: scale(1.2);
 
 .card {
     padding: 2rem;
-    background: #fff;  /* light mode card background */
-    border: 3px solid #000;
+    background: #222;
+    border: 2px solid #fff;
     border-radius: 15px;
-    transition: background 0.5s ease, color 0.5s ease, transform 0.3s ease;
+    transition: transform 0.3s ease, background 0.3s ease;
 }
 
 .card:hover {
-    background: #000;
-    color: #fff;
     transform: translateY(-5px);
-}
-
-/* Dark Section */
-.dark {
-    background: #000;
-    color: #fff;
-}
-
-.dark h2 {
-    border-color: #fff;
-}
-
-/* Footer */
-footer {
-    text-align: center;
-    padding: 2rem;
-    border-top: 3px solid #000;
-    font-size: 0.9rem;
-    border-radius: 10px 10px 0 0;
-}
-
-/* Dark Mode Styles */
-body.dark-mode {
-    background: #1A1A1A; /* site background in dark mode */
-    color: #fff;
-}
-
-body.dark-mode .nav a {
-    color: #fff;
-}
-
-body.dark-mode .btn {
-    border-color: #fff;
-    color: #fff;
-    background: #1A1A1A;
-}
-
-body.dark-mode .btn:hover {
     background: #fff;
     color: #000;
 }
 
-body.dark-mode .card {
-    border-color: #fff;
-    background: #222;
+/* ===== FOOTER ===== */
+footer {
+    margin-top: 6rem;
+    text-align: center;
+    padding: 2rem;
+    border-top: 2px solid currentColor;
 }
 
-body.dark-mode .dark {
-    background: #222;
+/* ===== LIGHT MODE ===== */
+body.light-mode {
+    background: #F2F2F2;
+    color: #1C1C1C;
 }
 
-/* Top bar in dark mode */
-body.dark-mode #top-bar {
-    background: #030303; /* top bar color in dark mode */
+body.light-mode #top-bar {
+    background: #000;
     color: #fff;
+}
+
+body.light-mode .card {
+    background: #fff;
+    border-color: #000;
+}
+
+body.light-mode .card:hover {
+    background: #000;
+    color: #fff;
+}
+/* ===== GALLERY ===== */
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.gallery-item {
+    overflow: hidden;
+    border-radius: 12px;
+    border: 2px solid currentColor;
+    transition: transform 0.3s ease;
+}
+
+.gallery-item img {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform 0.4s ease;
+}
+
+.gallery-item:hover img {
+    transform: scale(1.05);
+}
+.gallery-item {
+    position: relative;
+}
+
+.gallery-item::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.4), transparent);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.gallery-item:hover::after {
+    opacity: 1;
 }
