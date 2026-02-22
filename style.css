@@ -180,3 +180,82 @@ body.light-mode .card:hover {
 .gallery-item:hover::after {
     opacity: 1;
 }
+/* ===== MOBILE RESPONSIVE ===== */
+@media (max-width: 768px) {
+
+    /* Top bar */
+    #top-bar {
+    flex-direction: column;
+    height: auto;
+    padding: 1rem;
+    }
+
+    .bar-title {
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+    }
+
+    /* Dark mode button */
+    #dark-mode-toggle {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    }
+
+    /* Navigation menu vertical on mobile */
+    .nav {
+        flex-direction: column;
+        gap: 1rem;
+        padding: 0.5rem 0 1rem 0;
+    }
+
+    /* Hero / sections padding */
+    .section {
+        padding: 4rem 5%;
+    }
+
+    /* Hero text size */
+    .hero h1 {
+        font-size: 2rem;
+    }
+
+    .hero p {
+        font-size: 1rem;
+    }
+
+    /* Buttons smaller */
+    .btn {
+        padding: 0.6rem 1.5rem;
+        font-size: 0.9rem;
+    }
+
+    /* Grid and gallery responsive */
+    .grid,
+    .gallery-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .card,
+    .gallery-item {
+        padding: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .bar-title {
+        font-size: 1.3rem;
+    }
+
+    #dark-mode-toggle img {
+    width: 20px;
+    height: 20px;
+    }
+
+    .section h2 {
+        font-size: 1.5rem;
+    }
+
+    .nav a {
+        font-size: 0.9rem;
+    }
+}
