@@ -230,3 +230,9 @@ body.light-mode .card {
         font-size: 0.9rem;
     }
 }
+.gallery-item iframe {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16/9; /* maintain video ratio */
+    border-radius: 12px;
+}
