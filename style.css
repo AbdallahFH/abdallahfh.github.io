@@ -486,40 +486,6 @@ body.light-mode .btn:hover {
     color: #fff;
 }
 
-/* Telegram / WhatsApp buttons in the Contact section */
-.contact-buttons {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 1rem;
-    margin-top: 1.5rem;
-}
-
-.contact-btn {
-    display: inline-block;
-    padding: 0.7rem 1.8rem;
-    border: none;
-    border-radius: 10px;
-    color: #fff;
-    font-weight: bold;
-    text-decoration: none;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.contact-btn.telegram {
-    background: #2a8fd0;
-}
-
-.contact-btn.whatsapp {
-    background: #1fa855;
-}
-
-.contact-btn:hover,
-.contact-btn:focus-visible {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 24px rgba(130, 100, 255, 0.4);
-}
-
 /* Mobile: centre the stacked nav links */
 @media (max-width: 768px) {
     .nav {
