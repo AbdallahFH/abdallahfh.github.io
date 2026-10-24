@@ -14,7 +14,9 @@
 <body>
 
 <header id="top-bar">
-  <div class="bar-title">Phantom Tale</div>
+  <div class="bar-title">
+    <img src="Title.png" alt="Phantom Tale" onerror="this.replaceWith(document.createTextNode(this.alt))">
+  </div>
   <button id="dark-mode-toggle">
     <img id="theme-icon" src="DarkModeOn.png" alt="Dark Mode">
   </button>
@@ -29,14 +31,7 @@
   <a href="#contact">Contact</a>
 </nav>
 
-<section class="section">
-  <h2>Links</h2>
-  <p class="links-intro">Games, videos and other things I'm part of around the web.</p>
-
-  <div id="links-grid" class="links-grid">
-    <noscript><p class="links-empty">Turn on JavaScript to see the links.</p></noscript>
-  </div>
-</section>
+<section id="page-links" class="section links-section" data-page="links" hidden></section>
 
 <section id="contact" class="section">
   <h2>Contact</h2>

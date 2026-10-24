@@ -1,0 +1,23 @@
+# ------------------------------------------------------------
+#  LINKS FOR THE LINKS PAGE  (links.html)
+#
+#  Empty = nothing is shown on the page. Add a link and it appears.
+#  One link per line:
+#      https://example.com
+#      https://example.com | Title | Short description
+#  YouTube video links are embedded as a player automatically.
+#  Other links get a header screenshot, taken automatically.
+#
+#  Show or hide titles:
+#      @title: off              hides titles for the whole page
+#      https://... | notitle    hides the title for one link
+#      https://... | title      shows it for one link (when the page is off)
+#
+#  Lines starting with # are ignored. Delete a line to remove a link.
+# ------------------------------------------------------------
+
+@heading: Links
+@intro: Games, videos and other things I'm part of around the web.
+
+https://phantom-tale.itch.io/ | Phantom Tale on itch.io | Play my games and download builds.
+https://www.youtube.com/@phantom_taleT | Phantom Tale on YouTube | Devlogs, trailers and engine progress.

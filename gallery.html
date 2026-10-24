@@ -42,7 +42,9 @@
 <body>
 
 <header id="top-bar">
-  <div class="bar-title">Phantom Tale</div>
+  <div class="bar-title">
+    <img src="Title.png" alt="Phantom Tale" onerror="this.replaceWith(document.createTextNode(this.alt))">
+  </div>
   <button id="dark-mode-toggle">
     <img id="theme-icon" src="DarkModeOn.png" alt="Dark Mode">
   </button>
@@ -91,6 +93,8 @@
   <div id="lightbox-content"></div>
 </div>
 
+<section id="page-links" class="section links-section" data-page="gallery" hidden></section>
+
 <section id="contact" class="section">
   <h2>Contact</h2>
   <p>Email: AbdallahJTR@proton.me</p>
@@ -118,6 +122,7 @@
 </footer>
 
 <script src="script.js?v=2"></script>
+<script src="links.js?v=2"></script>
 <script>
 // LIGHTBOX FUNCTIONALITY
 const galleryItems = document.querySelectorAll('.gallery-item');

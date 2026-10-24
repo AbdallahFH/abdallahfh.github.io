@@ -1,42 +1,101 @@
-// Reads links.txt, takes a screenshot of every link, and writes links.json.
+// Reads every links/<page>.txt, takes a header screenshot of each normal link,
+// recognises YouTube videos (embedded, no screenshot needed), and writes links/<page>.json.
 // Run by .github/workflows/screenshots.yml, or by hand:
 //   npm install --no-save playwright && npx playwright install chromium
-//   node scripts/screenshots.mjs [links-file] [output-json]
+//   node scripts/screenshots.mjs [links-folder] [--parse-only]
+// --parse-only skips the browser and the network (handy for checking your txt files).
 import { chromium } from 'playwright';
 import { readFile, writeFile, mkdir, readdir, rm } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import path from 'node:path';
 
-const LINKS_FILE = process.argv[2] || 'links.txt';
-const OUT_JSON = process.argv[3] || 'links.json';
+const args = process.argv.slice(2);
+const PARSE_ONLY = args.includes('--parse-only');
+const DIR = args.find((a) => !a.startsWith('--')) || 'links';
 const SHOT_DIR = 'screenshots';
 
-function parseLinks(text) {
-    const links = [];
+const SHOW_WORDS = /^(title|showtitle)$/i;
+const HIDE_WORDS = /^(notitle|hidetitle)$/i;
+const OFF_VALUES = /^(off|no|false|hide|0)$/i;
+
+/** YouTube video / playlist links become embeds. Anything else (channels, other sites) is a normal link. */
+function youtube(url) {
+    const host = url.hostname.replace(/^(www|m)\./, '');
+    let id = null;
+    let list = null;
+    if (host === 'youtu.be') {
+        id = url.pathname.slice(1).split('/')[0];
+    } else if (host === 'youtube.com' || host === 'youtube-nocookie.com') {
+        if (url.pathname === '/watch') id = url.searchParams.get('v');
+        const m = url.pathname.match(/^\/(shorts|embed|live)\/([\w-]{6,})/);
+        if (m) id = m[2];
+        if (url.pathname === '/playlist') list = url.searchParams.get('list');
+    }
+    if (id && /^[\w-]{6,}$/.test(id)) {
+        return { watch: `https://www.youtube.com/watch?v=${id}`, embed: `https://www.youtube.com/embed/${id}` };
+    }
+    if (list && /^[\w-]+$/.test(list)) {
+        return { watch: url.href, embed: `https://www.youtube.com/embed/videoseries?list=${list}` };
+    }
+    return null;
+}
+
+function parseFile(text, name) {
+    const cfg = { heading: '', intro: '', showTitle: true, entries: [] };
     const seen = new Set();
     for (const raw of text.split(/\r?\n/)) {
         const line = raw.trim();
         if (!line || line.startsWith('#')) continue;
 
-        const [urlPart, title = '', ...rest] = line.split('|').map((s) => s.trim());
+        // Settings for the whole page, e.g. "@title: off"
+        if (line.startsWith('@')) {
+            const m = line.match(/^@(\w+)\s*:\s*(.*)$/);
+            if (!m) continue;
+            const key = m[1].toLowerCase();
+            const value = m[2].trim();
+            if (key === 'heading') cfg.heading = value;
+            else if (key === 'intro') cfg.intro = value;
+            else if (key === 'title') cfg.showTitle = !OFF_VALUES.test(value);
+            else console.warn(`${name}: unknown setting "@${m[1]}" ignored`);
+            continue;
+        }
+
+        const fields = line.split('|').map((s) => s.trim());
+        const urlPart = fields.shift();
+        let showTitle;
+        const text = [];
+        for (const f of fields) {
+            if (HIDE_WORDS.test(f)) showTitle = false;
+            else if (SHOW_WORDS.test(f)) showTitle = true;
+            else text.push(f);
+        }
+
         // Links pasted without "https://" (example.com, localhost:8080/x) get https:// added.
         const withScheme = /^[a-z][a-z0-9+.-]*:\/\//i.test(urlPart) ? urlPart : 'https://' + urlPart;
         let url;
         try {
             url = new URL(withScheme);
         } catch {
-            console.warn(`Skipping (not a valid URL): ${line}`);
+            console.warn(`${name}: skipping (not a valid URL): ${line}`);
             continue;
         }
         if (url.protocol !== 'http:' && url.protocol !== 'https:') {
-            console.warn(`Skipping (only http/https links): ${line}`);
+            console.warn(`${name}: skipping (only http/https links): ${line}`);
             continue;
         }
         if (seen.has(url.href)) continue;
         seen.add(url.href);
-        links.push({ url: url.href, title, description: rest.join(' | ') });
+
+        cfg.entries.push({
+            url: url.href,
+            title: text[0] || '',
+            description: text.slice(1).join(' | '),
+            showTitle,
+            video: youtube(url)
+        });
     }
-    return links;
+    for (const e of cfg.entries) if (e.showTitle === undefined) e.showTitle = cfg.showTitle;
+    return cfg;
 }
 
 function slugFor(href) {
@@ -50,13 +109,17 @@ function slugFor(href) {
     return `${base || 'link'}-${hash}`;
 }
 
-async function readPrevious() {
-    try {
-        const prev = JSON.parse(await readFile(OUT_JSON, 'utf8'));
-        return new Map(prev.map((p) => [p.url, p]));
-    } catch {
-        return new Map();
+async function readPrevious(files) {
+    const map = new Map();
+    for (const f of files) {
+        try {
+            const data = JSON.parse(await readFile(path.join(DIR, f), 'utf8'));
+            for (const item of data.items || []) if (!map.has(item.url)) map.set(item.url, item);
+        } catch {
+            /* no previous data */
+        }
     }
+    return map;
 }
 
 async function capture(context, href, file) {
@@ -73,60 +136,112 @@ async function capture(context, href, file) {
     }
 }
 
-const links = parseLinks(await readFile(LINKS_FILE, 'utf8'));
-const previous = await readPrevious();
+async function videoTitle(watchUrl) {
+    try {
+        const res = await fetch(
+            'https://www.youtube.com/oembed?format=json&url=' + encodeURIComponent(watchUrl),
+            { signal: AbortSignal.timeout(10000) }
+        );
+        if (!res.ok) return '';
+        return String((await res.json()).title || '').trim().slice(0, 100);
+    } catch {
+        return '';
+    }
+}
+
+// ---------- read every links/<page>.txt ----------
+const dirFiles = await readdir(DIR);
+const txtFiles = dirFiles.filter((n) => n.endsWith('.txt')).sort();
+const pages = [];
+for (const file of txtFiles) {
+    const name = file.slice(0, -4);
+    pages.push({ name, ...parseFile(await readFile(path.join(DIR, file), 'utf8'), name) });
+}
+const previous = await readPrevious(dirFiles.filter((n) => n.endsWith('.json')));
 await mkdir(SHOT_DIR, { recursive: true });
 
-const browser = await chromium.launch();
-const context = await browser.newContext({
-    viewport: { width: 1280, height: 800 },
-    locale: 'en-US'
-});
+// ---------- screenshots (each URL once, even if several pages use it) ----------
+const shots = new Map(); // url -> { image, updated, pageTitle }
+const needShot = [...new Set(pages.flatMap((p) => p.entries.filter((e) => !e.video).map((e) => e.url)))];
 
-const manifest = [];
-for (const link of links) {
-    const slug = slugFor(link.url);
-    const image = `${SHOT_DIR}/${slug}.jpg`;
-    const old = previous.get(link.url);
-    let pageTitle = '';
-    let ok = false;
-
-    for (let attempt = 1; attempt <= 2 && !ok; attempt++) {
-        try {
-            pageTitle = await capture(context, link.url, image);
-            ok = true;
-        } catch (err) {
-            console.warn(`Attempt ${attempt} failed for ${link.url}: ${err.message.split('\n')[0]}`);
+if (!PARSE_ONLY && needShot.length) {
+    const browser = await chromium.launch();
+    const context = await browser.newContext({ viewport: { width: 1280, height: 800 }, locale: 'en-US' });
+    for (const href of needShot) {
+        const image = `${SHOT_DIR}/${slugFor(href)}.jpg`;
+        let ok = false;
+        let pageTitle = '';
+        for (let attempt = 1; attempt <= 2 && !ok; attempt++) {
+            try {
+                pageTitle = await capture(context, href, image);
+                ok = true;
+            } catch (err) {
+                console.warn(`Attempt ${attempt} failed for ${href}: ${err.message.split('\n')[0]}`);
+            }
+        }
+        if (ok) {
+            shots.set(href, { image, updated: new Date().toISOString(), pageTitle });
+            console.log(`Captured ${href}`);
+        } else if (previous.get(href)?.image) {
+            console.warn(`Keeping previous screenshot for ${href}`);
+        } else {
+            console.warn(`No screenshot for ${href}`);
         }
     }
-
-    const entry = {
-        url: link.url,
-        title: link.title || pageTitle || (old && old.title) || '',
-        description: link.description,
-        image: null
-    };
-    if (ok) {
-        entry.image = image;
-        entry.updated = new Date().toISOString();
-        console.log(`Captured ${link.url}`);
-    } else if (old && old.image) {
-        entry.image = old.image; // keep the last good screenshot
-        entry.updated = old.updated;
-        console.warn(`Keeping previous screenshot for ${link.url}`);
-    } else {
-        console.warn(`No screenshot for ${link.url}`);
-    }
-    manifest.push(entry);
+    await browser.close();
 }
 
-await browser.close();
-
-// Delete screenshots for links that were removed from links.txt.
-const keep = new Set(manifest.filter((m) => m.image).map((m) => path.basename(m.image)));
-for (const name of await readdir(SHOT_DIR)) {
-    if (name.endsWith('.jpg') && !keep.has(name)) await rm(path.join(SHOT_DIR, name));
+// ---------- titles for videos without one ----------
+const videoTitles = new Map();
+if (!PARSE_ONLY) {
+    const wanted = new Set(
+        pages.flatMap((p) => p.entries.filter((e) => e.video && !e.title).map((e) => e.video.watch))
+    );
+    for (const watch of wanted) videoTitles.set(watch, await videoTitle(watch));
 }
 
-await writeFile(OUT_JSON, JSON.stringify(manifest, null, 2) + '\n');
-console.log(`Done: ${manifest.filter((m) => m.image).length}/${manifest.length} screenshots.`);
+// ---------- write links/<page>.json ----------
+const keepImages = new Set();
+let total = 0;
+for (const page of pages) {
+    const items = page.entries.map((e) => {
+        const old = previous.get(e.url);
+        const shot = shots.get(e.url);
+        const item = {
+            url: e.url,
+            title:
+                e.title ||
+                (e.video ? videoTitles.get(e.video.watch) : shot?.pageTitle) ||
+                old?.title ||
+                '',
+            description: e.description,
+            showTitle: e.showTitle,
+            image: null
+        };
+        if (e.video) {
+            item.video = e.video.embed;
+        } else if (shot) {
+            item.image = shot.image;
+            item.updated = shot.updated;
+        } else if (old?.image) {
+            item.image = old.image; // keep the last good screenshot
+            item.updated = old.updated;
+        }
+        if (item.image) keepImages.add(path.basename(item.image));
+        return item;
+    });
+    total += items.length;
+    const out = { heading: page.heading, intro: page.intro, items };
+    await writeFile(path.join(DIR, `${page.name}.json`), JSON.stringify(out, null, 2) + '\n');
+}
+
+// ---------- tidy up ----------
+const pageNames = new Set(pages.map((p) => p.name));
+for (const f of dirFiles) {
+    if (f.endsWith('.json') && !pageNames.has(f.slice(0, -5))) await rm(path.join(DIR, f));
+}
+for (const f of await readdir(SHOT_DIR)) {
+    if (f.endsWith('.jpg') && !keepImages.has(f)) await rm(path.join(SHOT_DIR, f));
+}
+
+console.log(`Done: ${pages.length} pages, ${total} links.`);

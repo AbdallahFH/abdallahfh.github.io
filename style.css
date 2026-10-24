@@ -466,6 +466,37 @@ body.light-mode .link-card {
     opacity: 0.75;
 }
 
+/* Cards keep their own height, so a card without a title has no blank strip */
+.links-grid {
+    align-items: start;
+}
+
+/* A links section with no links is simply hidden */
+.links-section[hidden] {
+    display: none;
+}
+
+/* Embedded YouTube videos */
+.link-video {
+    aspect-ratio: 16 / 9;
+    background: #000;
+}
+
+.link-video iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    display: block;
+}
+
+.video-card:hover {
+    transform: none;
+}
+
+.link-card .link-info:empty {
+    display: none;
+}
+
 /* Project cards with a header image that link to Steam */
 .project-card {
     display: block;
@@ -500,6 +531,21 @@ body.light-mode .btn {
 body.light-mode .btn:hover {
     background: #1c1c1c;
     color: #fff;
+}
+
+/* Custom image title in the top bar (transparent PNG on the black bar, centred) */
+.bar-title img {
+    display: block;
+    height: 52px;
+    width: auto;
+    max-width: min(70vw, 600px);
+    object-fit: contain;
+}
+
+@media (max-width: 768px) {
+    .bar-title img {
+        height: 40px;
+    }
 }
 
 /* Mobile: centre the stacked nav links */

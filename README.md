@@ -1,11 +1,22 @@
 # [Phantom Tale]([url](http://phantomtale.com/))
 
-## Adding links to the Links page
+## Adding links to a page
 
-1. Open `links.txt` and add a line with a URL (optionally `| Title | Description`).
-2. Commit the change.
-3. A GitHub Action (`.github/workflows/screenshots.yml`) screenshots every link,
-   saves the images in `screenshots/`, and updates `links.json`. It also refreshes
-   everything every Monday. You can run it any time from the **Actions** tab.
+Every page has its own list in the `links/` folder: `index.txt` (home), `projects.txt`,
+`about.txt`, `gallery.txt` and `links.txt`. **If a list is empty, nothing is shown on that page.**
 
-`links.json` and `screenshots/` are generated, so there is no need to edit them by hand.
+Add one link per line and commit:
+
+    https://example.com
+    https://example.com | Title | Short description
+
+- **YouTube video links** are embedded as a player automatically.
+- **Any other link** becomes a card with a header screenshot, taken automatically.
+- **Titles on or off:** `@title: off` hides titles for the whole page, `| notitle` hides one,
+  and `| title` shows one when the page is off.
+- **Heading and intro:** `@heading: My Videos` and `@intro: some text`.
+
+A GitHub Action (`.github/workflows/screenshots.yml`) takes the screenshots, saves them in
+`screenshots/` and writes `links/<page>.json`. It runs when you edit a file in `links/`, every
+Monday, and on demand from the **Actions** tab. Those `.json` files and `screenshots/` are
+generated, so don't edit them by hand.

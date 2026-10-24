@@ -13,7 +13,9 @@
 <body>
 
 <header id="top-bar">
-  <div class="bar-title">Phantom Tale</div>
+  <div class="bar-title">
+    <img src="Title.png" alt="Phantom Tale" onerror="this.replaceWith(document.createTextNode(this.alt))">
+  </div>
   <button id="dark-mode-toggle">
     <img id="theme-icon" src="DarkModeOn.png" alt="Dark Mode">
   </button>
@@ -34,6 +36,8 @@
 
 I also enjoy 3D art and digital art, exploring new ways to bring ideas to life. Robotics fascinates me too, and I’m experimenting with it, even though I’m still learning.</p>
 </section>
+
+<section id="page-links" class="section links-section" data-page="about" hidden></section>
 
 <section id="contact" class="section">
   <h2>Contact</h2>
@@ -62,5 +66,6 @@ I also enjoy 3D art and digital art, exploring new ways to bring ideas to life. 
 </footer>
 
 <script src="script.js?v=2"></script>
+<script src="links.js?v=2"></script>
 </body>
 </html>
