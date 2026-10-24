@@ -272,12 +272,28 @@ body.light-mode .card {
 /* Animated background canvas (created by cosmic.js) */
 #cosmos {
     position: fixed;
-    inset: 0;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
     display: block;
     z-index: -1;
     pointer-events: none;
+}
+
+/* Make the dark / light toggle easy to see and click on the dark top bar */
+#dark-mode-toggle {
+    background: rgba(255, 255, 255, 0.92);
+    border-radius: 50%;
+    padding: 5px;
+    line-height: 0;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+#dark-mode-toggle:hover,
+#dark-mode-toggle:focus-visible {
+    transform: scale(1.1);
+    box-shadow: 0 0 14px rgba(150, 120, 255, 0.6);
 }
 
 #top-bar {
