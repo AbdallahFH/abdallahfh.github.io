@@ -1,0 +1,52 @@
+name: Update link screenshots
+
+on:
+  # Whenever you edit your list of links
+  push:
+    branches: [main]
+    paths:
+      - links.txt
+      - scripts/screenshots.mjs
+  # Refresh every Monday so screenshots don't go stale
+  schedule:
+    - cron: '0 3 * * 1'
+  # Or run it yourself from the Actions tab
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: link-screenshots
+  cancel-in-progress: false
+
+jobs:
+  screenshots:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install Playwright
+        run: |
+          npm install --no-save playwright
+          npx playwright install --with-deps chromium
+
+      - name: Take screenshots
+        run: node scripts/screenshots.mjs
+
+      - name: Commit changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add links.json screenshots
+          if git diff --cached --quiet; then
+            echo "Nothing changed."
+          else
+            git commit -m "Update link screenshots"
+            git pull --rebase origin main
+            git push
+          fi

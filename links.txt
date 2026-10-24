@@ -1,0 +1,16 @@
+# ------------------------------------------------------------
+#  DROP YOUR LINKS HERE
+#
+#  One link per line. Save the file, commit it, and the site
+#  takes a screenshot of every link automatically (takes a
+#  minute or two) and shows it on the Links page.
+#
+#  Simplest:   https://example.com
+#  With extras (title and description are optional):
+#              https://example.com | My Title | A short description
+#
+#  Lines starting with # are ignored. Delete a line to remove a link.
+# ------------------------------------------------------------
+
+https://phantom-tale.itch.io/ | Phantom Tale on itch.io | Play my games and download builds.
+https://www.youtube.com/@phantom_taleT | Phantom Tale on YouTube | Devlogs, trailers and engine progress.

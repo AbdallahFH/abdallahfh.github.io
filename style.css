@@ -1,0 +1,467 @@
+/* RESET */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* BODY & TOP BAR */
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #0e0e0e;
+    color: #fff;
+    line-height: 1.6;
+    padding-top: 80px;
+    transition: background 0.4s ease, color 0.4s ease;
+}
+
+#top-bar {
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 80px;
+background: #030303;
+color: #fff;
+display: flex;
+align-items: center;
+justify-content: center;
+padding: 0 2rem;
+z-index: 1000;
+transition: transform 0.4s ease;
+}
+
+.bar-title {
+    font-size: 2rem;
+    font-weight: 900;
+    letter-spacing: 3px;
+}
+
+/* DARK MODE BUTTON */
+#dark-mode-toggle {
+position: absolute;
+right: 2rem;
+background: transparent;
+border: none;
+cursor: pointer;
+}
+
+#dark-mode-toggle img {
+width: 24px;
+height: 24px;
+}
+
+/* NAVIGATION */
+.nav {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    padding: 1rem 0;
+}
+
+.nav a {
+    text-decoration: none;
+    color: inherit;
+    font-weight: bold;
+}
+
+/* HERO & SECTION */
+.hero {
+    text-align: center;
+    padding: 8rem 10%;
+}
+
+.hero h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.hero p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    opacity: 0.8;
+}
+
+.btn {
+    display: inline-block;
+    padding: 0.8rem 2rem;
+    border: 2px solid currentColor;
+    border-radius: 10px;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.3s ease;
+}
+
+.btn:hover {
+    background: #fff;
+    color: #000;
+}
+
+.section {
+    padding: 6rem 10%;
+    text-align: center;
+}
+
+.section h2 {
+    margin-bottom: 2rem;
+    border-bottom: 2px solid currentColor;
+    display: inline-block;
+    padding-bottom: 0.5rem;
+}
+
+/* GRID */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+}
+
+.card {
+    padding: 2rem;
+    background: #222;
+    border: 2px solid #fff;
+    border-radius: 12px;
+}
+
+/* FOOTER */
+footer {
+    margin-top: 4rem;
+    text-align: center;
+    padding: 2rem;
+    border-top: 2px solid currentColor;
+}
+
+/* LIGHT MODE */
+body.light-mode {
+    background: #F2F2F2;
+    color: #1C1C1C;
+}
+
+body.light-mode #top-bar {
+    background: #000;
+    color: #fff;
+}
+
+body.light-mode .card {
+    background: #fff;
+    border-color: #000;
+}
+
+/* GALLERY */
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.gallery-item {
+    overflow: hidden;
+    border-radius: 12px;
+    border: 2px solid currentColor;
+    transition: transform 0.3s ease;
+    position: relative;
+}
+
+.gallery-item img,
+.gallery-item iframe {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform 0.4s ease;
+    border-radius: 12px;
+}
+
+.gallery-item:hover img,
+.gallery-item:hover iframe {
+    transform: scale(1.05);
+}
+
+.gallery-item::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.4), transparent);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.gallery-item:hover::after {
+    opacity: 1;
+}
+
+/* MOBILE RESPONSIVE */
+@media (max-width: 768px) {
+    #top-bar {
+    flex-direction: column;
+    height: auto;
+    padding: 1rem;
+    }
+    .bar-title {
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+    }
+    #dark-mode-toggle {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    }
+    .nav {
+        flex-direction: column;
+        gap: 1rem;
+        padding: 0.5rem 0 1rem 0;
+    }
+    .section {
+        padding: 4rem 5%;
+    }
+    .hero h1 {
+        font-size: 2rem;
+    }
+    .hero p {
+        font-size: 1rem;
+    }
+    .btn {
+        padding: 0.6rem 1.5rem;
+        font-size: 0.9rem;
+    }
+    .grid,
+    .gallery-grid {
+        grid-template-columns: 1fr;
+    }
+    .card,
+    .gallery-item {
+        padding: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .bar-title {
+        font-size: 1.3rem;
+    }
+    #dark-mode-toggle img {
+    width: 20px;
+    height: 20px;
+    }
+    .section h2 {
+        font-size: 1.5rem;
+    }
+    .nav a {
+        font-size: 0.9rem;
+    }
+}
+.contact-links {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+
+.contact-links a img {
+    width: 40px;
+    height: 40px;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.contact-links a img:hover {
+    transform: scale(1.2);
+    opacity: 0.8;
+}
+
+/* ============ COSMIC THEME ============ */
+
+/* Animated background canvas (created by cosmic.js) */
+#cosmos {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    z-index: -1;
+    pointer-events: none;
+}
+
+#top-bar {
+    background: rgba(3, 3, 3, 0.82);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+/* Nav: animated underline */
+.nav a {
+    position: relative;
+    padding-bottom: 4px;
+}
+
+.nav a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, #9d7bff, #5fd3ff);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+}
+
+.nav a:hover::after,
+.nav a:focus-visible::after {
+    transform: scaleX(1);
+}
+
+/* Hero: gradient title and glowing button */
+.hero h1 {
+    background: linear-gradient(90deg, #ffffff, #bba9ff 45%, #7fd6ff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+body.light-mode .hero h1 {
+    background: linear-gradient(90deg, #1c1c3a, #5b3fd1 50%, #1d6fb8);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.btn:hover {
+    box-shadow: 0 0 26px rgba(150, 120, 255, 0.55);
+}
+
+/* Cards float over the starfield */
+.card {
+    background: rgba(20, 18, 40, 0.72);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 36px rgba(130, 100, 255, 0.3);
+}
+
+body.light-mode .card {
+    background: rgba(255, 255, 255, 0.78);
+}
+
+footer {
+    background: rgba(0, 0, 0, 0.25);
+}
+
+body.light-mode footer {
+    background: rgba(255, 255, 255, 0.45);
+}
+
+/* ============ LINKS PAGE ============ */
+
+.links-intro {
+    max-width: 640px;
+    margin: 0 auto 2.5rem;
+    opacity: 0.8;
+}
+
+.links-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2rem;
+    text-align: left;
+}
+
+.link-card {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    color: inherit;
+    text-decoration: none;
+    border: 2px solid currentColor;
+    border-radius: 12px;
+    background: rgba(20, 18, 40, 0.72);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+body.light-mode .link-card {
+    background: rgba(255, 255, 255, 0.78);
+}
+
+.link-card:hover,
+.link-card:focus-visible {
+    transform: translateY(-6px);
+    box-shadow: 0 14px 40px rgba(130, 100, 255, 0.35);
+}
+
+.link-shot {
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    background: linear-gradient(135deg, #1a1440, #0b1f3a);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.link-shot img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+    display: block;
+    transition: transform 0.4s ease;
+}
+
+.link-card:hover .link-shot img {
+    transform: scale(1.05);
+}
+
+.link-shot .link-initial {
+    font-size: 3.5rem;
+    font-weight: 900;
+    color: rgba(255, 255, 255, 0.55);
+    text-transform: uppercase;
+}
+
+.link-info {
+    padding: 1rem 1.2rem 1.2rem;
+}
+
+.link-info h3 {
+    font-size: 1.1rem;
+    margin-bottom: 0.2rem;
+    overflow-wrap: anywhere;
+}
+
+.link-host {
+    font-size: 0.85rem;
+    opacity: 0.65;
+    margin-bottom: 0.5rem;
+    overflow-wrap: anywhere;
+}
+
+.link-desc {
+    font-size: 0.95rem;
+    opacity: 0.85;
+}
+
+.links-empty {
+    grid-column: 1 / -1;
+    text-align: center;
+    opacity: 0.75;
+}
+
+/* Mobile: centre the stacked nav links */
+@media (max-width: 768px) {
+    .nav {
+        align-items: center;
+    }
+}
+
+/* Respect reduced motion for the hover animations too */
+@media (prefers-reduced-motion: reduce) {
+    .card,
+    .link-card,
+    .link-shot img,
+    .nav a::after {
+        transition: none;
+    }
+}
