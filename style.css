@@ -302,6 +302,38 @@ body.light-mode .card {
     box-shadow: 0 0 14px rgba(150, 120, 255, 0.6);
 }
 
+/* Language button (left side of the top bar, mirrors the dark/light button on the right) */
+#lang-toggle {
+    position: absolute;
+    left: 2rem;
+    display: block;
+    background: rgba(255, 255, 255, 0.92);
+    border-radius: 50%;
+    padding: 5px;
+    line-height: 0;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+#lang-toggle img {
+    display: block;
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+}
+
+#lang-toggle:hover,
+#lang-toggle:focus-visible {
+    transform: scale(1.1);
+    box-shadow: 0 0 14px rgba(150, 120, 255, 0.6);
+}
+
+@media (max-width: 768px) {
+    #lang-toggle {
+        top: 1rem;
+        left: 1rem;
+    }
+}
+
 #top-bar {
     background: rgba(3, 3, 3, 0.82);
     backdrop-filter: blur(8px);
@@ -388,7 +420,7 @@ body.light-mode footer {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 2rem;
-    text-align: left;
+    text-align: start;
 }
 
 .link-card {
@@ -556,4 +588,20 @@ body.light-mode .btn:hover {
     .nav a::after {
         transition: none;
     }
+}
+
+/* ============ ARABIC (right-to-left) ============ */
+html[lang="ar"] body {
+    font-family: "Segoe UI", Tahoma, "Noto Sans Arabic", "Noto Naskh Arabic", Arial, sans-serif;
+    line-height: 1.8;
+}
+
+html[lang="ar"] .hero h1 {
+    line-height: 1.5;
+}
+
+/* Email addresses and other Latin text keep their own direction inside Arabic text */
+bdi.ltr {
+    unicode-bidi: isolate;
+    direction: ltr;
 }

@@ -1,5 +1,6 @@
-// Reads every links/<page>.txt, takes a header screenshot of each normal link,
-// recognises YouTube videos (embedded, no screenshot needed), and writes links/<page>.json.
+// Reads every links/<page>.txt (and links/<language>/<page>.txt, e.g. links/ar/), takes a header
+// screenshot of each normal link, recognises YouTube videos (embedded, no screenshot needed),
+// and writes the matching .json next to each .txt.
 // Run by .github/workflows/screenshots.yml, or by hand:
 //   npm install --no-save playwright && npx playwright install chromium
 //   node scripts/screenshots.mjs [links-folder] [--parse-only]
@@ -11,7 +12,7 @@ import path from 'node:path';
 
 const args = process.argv.slice(2);
 const PARSE_ONLY = args.includes('--parse-only');
-const DIR = args.find((a) => !a.startsWith('--')) || 'links';
+const ROOT_DIR = args.find((a) => !a.startsWith('--')) || 'links';
 const SHOT_DIR = 'screenshots';
 
 const SHOW_WORDS = /^(title|showtitle)$/i;
@@ -109,14 +110,16 @@ function slugFor(href) {
     return `${base || 'link'}-${hash}`;
 }
 
-async function readPrevious(files) {
+async function readPrevious(dirs) {
     const map = new Map();
-    for (const f of files) {
-        try {
-            const data = JSON.parse(await readFile(path.join(DIR, f), 'utf8'));
-            for (const item of data.items || []) if (!map.has(item.url)) map.set(item.url, item);
-        } catch {
-            /* no previous data */
+    for (const dir of dirs) {
+        for (const f of (await readdir(dir)).filter((n) => n.endsWith('.json'))) {
+            try {
+                const data = JSON.parse(await readFile(path.join(dir, f), 'utf8'));
+                for (const item of data.items || []) if (!map.has(item.url)) map.set(item.url, item);
+            } catch {
+                /* no previous data */
+            }
         }
     }
     return map;
@@ -150,14 +153,21 @@ async function videoTitle(watchUrl) {
 }
 
 // ---------- read every links/<page>.txt ----------
-const dirFiles = await readdir(DIR);
-const txtFiles = dirFiles.filter((n) => n.endsWith('.txt')).sort();
-const pages = [];
-for (const file of txtFiles) {
-    const name = file.slice(0, -4);
-    pages.push({ name, ...parseFile(await readFile(path.join(DIR, file), 'utf8'), name) });
+// links/ itself (English) plus one folder per other language, e.g. links/ar/
+const dirs = [ROOT_DIR];
+for (const entry of await readdir(ROOT_DIR, { withFileTypes: true })) {
+    if (entry.isDirectory()) dirs.push(path.join(ROOT_DIR, entry.name));
 }
-const previous = await readPrevious(dirFiles.filter((n) => n.endsWith('.json')));
+const pages = [];
+for (const dir of dirs) {
+    const txtFiles = (await readdir(dir)).filter((n) => n.endsWith('.txt')).sort();
+    for (const file of txtFiles) {
+        const name = file.slice(0, -4);
+        const label = path.join(dir, name);
+        pages.push({ dir, name, ...parseFile(await readFile(path.join(dir, file), 'utf8'), label) });
+    }
+}
+const previous = await readPrevious(dirs);
 await mkdir(SHOT_DIR, { recursive: true });
 
 // ---------- screenshots (each URL once, even if several pages use it) ----------
@@ -232,13 +242,15 @@ for (const page of pages) {
     });
     total += items.length;
     const out = { heading: page.heading, intro: page.intro, items };
-    await writeFile(path.join(DIR, `${page.name}.json`), JSON.stringify(out, null, 2) + '\n');
+    await writeFile(path.join(page.dir, `${page.name}.json`), JSON.stringify(out, null, 2) + '\n');
 }
 
 // ---------- tidy up ----------
-const pageNames = new Set(pages.map((p) => p.name));
-for (const f of dirFiles) {
-    if (f.endsWith('.json') && !pageNames.has(f.slice(0, -5))) await rm(path.join(DIR, f));
+const pageKeys = new Set(pages.map((p) => path.join(p.dir, p.name)));
+for (const dir of dirs) {
+    for (const f of await readdir(dir)) {
+        if (f.endsWith('.json') && !pageKeys.has(path.join(dir, f.slice(0, -5)))) await rm(path.join(dir, f));
+    }
 }
 for (const f of await readdir(SHOT_DIR)) {
     if (f.endsWith('.jpg') && !keepImages.has(f)) await rm(path.join(SHOT_DIR, f));

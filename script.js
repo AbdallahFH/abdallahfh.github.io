@@ -22,9 +22,12 @@ function saveTheme(value) {
     }
 }
 
+// Pages in /ar/ load the icons from "../", so keep whatever folder the page already uses.
+const iconBase = icon ? (icon.getAttribute('src') || '').replace(/DarkMode(On|Off)\.png.*$/, '') : '';
+
 function applyTheme(light) {
     document.body.classList.toggle('light-mode', light);
-    if (icon) icon.src = light ? 'DarkModeOff.png' : 'DarkModeOn.png';
+    if (icon) icon.src = iconBase + (light ? 'DarkModeOff.png' : 'DarkModeOn.png');
 }
 
 applyTheme(readTheme() === 'light');
@@ -42,8 +45,11 @@ if (topBar) {
 }
 
 if (toggle) {
-    toggle.setAttribute('aria-label', 'Switch between dark and light mode');
-    toggle.setAttribute('title', 'Switch between dark and light mode');
+    const label = document.documentElement.lang === 'ar'
+        ? 'التبديل بين الوضع الداكن والفاتح'
+        : 'Switch between dark and light mode';
+    toggle.setAttribute('aria-label', label);
+    toggle.setAttribute('title', label);
     toggle.addEventListener('click', () => {
         const light = !document.body.classList.contains('light-mode');
         applyTheme(light);

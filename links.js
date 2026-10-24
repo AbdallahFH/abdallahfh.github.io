@@ -4,11 +4,13 @@
     const section = document.getElementById('page-links');
     if (!section) return;
     const page = section.dataset.page;
-    if (!page) return;
+    const src = section.dataset.src || (page ? 'links/' + encodeURIComponent(page) + '.json' : '');
+    const base = section.dataset.base || ''; // "../" on pages inside /ar/
+    if (!src) return;
 
     let data;
     try {
-        const res = await fetch('links/' + encodeURIComponent(page) + '.json', { cache: 'no-cache' });
+        const res = await fetch(src, { cache: 'no-cache' });
         if (!res.ok) return;
         data = await res.json();
     } catch (err) {
@@ -89,7 +91,7 @@
                 const img = document.createElement('img');
                 img.loading = 'lazy';
                 img.alt = 'Screenshot of ' + host;
-                img.src = item.image + (item.updated ? '?v=' + encodeURIComponent(item.updated) : '');
+                img.src = base + item.image + (item.updated ? '?v=' + encodeURIComponent(item.updated) : '');
                 img.addEventListener('error', showInitial);
                 shot.appendChild(img);
             } else {

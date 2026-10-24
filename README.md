@@ -20,3 +20,14 @@ A GitHub Action (`.github/workflows/screenshots.yml`) takes the screenshots, sav
 `screenshots/` and writes `links/<page>.json`. It runs when you edit a file in `links/`, every
 Monday, and on demand from the **Actions** tab. Those `.json` files and `screenshots/` are
 generated, so don't edit them by hand.
+
+## Languages (English and Arabic)
+
+English pages are in the root, Arabic pages in `ar/` (same file names: `ar/about.html`, ...).
+The round button on the **left** of the top bar switches language: it shows the Arabic icon
+(`AR.svg`) on English pages and the English icon (`EN.svg`) on Arabic pages. The choice is
+remembered in the visitor's browser.
+
+- **Edit text:** change the English page and its twin in `ar/` separately.
+- **Links per language:** `links/<page>.txt` for English, `links/ar/<page>.txt` for Arabic.
+- **A new page:** add it in both places and add the `hreflang` tags (copy them from an existing page).

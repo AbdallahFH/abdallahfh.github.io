@@ -1,23 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="https://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://phantomtale.com/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://phantomtale.com/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://phantomtale.com/ar/"/>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://phantomtale.com/ar/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://phantomtale.com/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://phantomtale.com/ar/"/>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://phantomtale.com/projects.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://phantomtale.com/projects.html"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://phantomtale.com/ar/projects.html"/>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://phantomtale.com/ar/projects.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://phantomtale.com/projects.html"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://phantomtale.com/ar/projects.html"/>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://phantomtale.com/about.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://phantomtale.com/about.html"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://phantomtale.com/ar/about.html"/>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://phantomtale.com/ar/about.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://phantomtale.com/about.html"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://phantomtale.com/ar/about.html"/>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://phantomtale.com/gallery.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://phantomtale.com/gallery.html"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://phantomtale.com/ar/gallery.html"/>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://phantomtale.com/ar/gallery.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://phantomtale.com/gallery.html"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://phantomtale.com/ar/gallery.html"/>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://phantomtale.com/links.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://phantomtale.com/links.html"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://phantomtale.com/ar/links.html"/>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://phantomtale.com/ar/links.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://phantomtale.com/links.html"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://phantomtale.com/ar/links.html"/>
     <priority>0.6</priority>
   </url>
 </urlset>

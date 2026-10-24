@@ -1,0 +1,20 @@
+{
+  "heading": "الروابط",
+  "intro": "ألعاب ومقاطع فيديو وأشياء أشارك فيها عبر الإنترنت.",
+  "items": [
+    {
+      "url": "https://phantom-tale.itch.io/",
+      "title": "Phantom Tale على itch.io",
+      "description": "العب ألعابي وحمّل النسخ.",
+      "showTitle": true,
+      "image": null
+    },
+    {
+      "url": "https://www.youtube.com/@phantom_taleT",
+      "title": "Phantom Tale على يوتيوب",
+      "description": "يوميات التطوير والمقاطع الترويجية وتقدّم المحرك.",
+      "showTitle": true,
+      "image": null
+    }
+  ]
+}

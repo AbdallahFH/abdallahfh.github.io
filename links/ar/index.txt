@@ -1,0 +1,11 @@
+# ------------------------------------------------------------
+#  LINKS FOR THE ARABIC VERSION OF THIS PAGE  (ar/index.html)
+#
+#  Empty = nothing is shown on the page. Add a link and it appears.
+#  Same rules as the English lists in the links/ folder:
+#      https://example.com | العنوان | وصف قصير
+#  YouTube video links are embedded as a player automatically.
+#  @title: off  hides titles for the page,  | notitle  hides one,  | title  shows one.
+#  @heading: ...  and  @intro: ...  add a heading and intro text.
+#  Lines starting with # are ignored.
+# ------------------------------------------------------------
