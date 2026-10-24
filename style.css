@@ -449,6 +449,39 @@ body.light-mode .link-card {
     opacity: 0.75;
 }
 
+/* Project cards with a header image that link to Steam */
+.project-card {
+    display: block;
+    padding: 0;
+    overflow: hidden;
+    color: inherit;
+    text-decoration: none;
+}
+
+.project-card img {
+    display: block;
+    width: 100%;
+    height: auto;
+    transition: transform 0.4s ease;
+}
+
+.project-card:hover img {
+    transform: scale(1.04);
+}
+
+.project-title {
+    display: block;
+    padding: 1rem 1.2rem 1.2rem;
+    font-weight: bold;
+}
+
+/* Plain (non-image) project cards: centre the text when a row is taller */
+.grid > .card:not(.project-card) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 /* Mobile: centre the stacked nav links */
 @media (max-width: 768px) {
     .nav {
