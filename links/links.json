@@ -2,7 +2,21 @@
   "heading": "Links",
   "intro": "Games, videos and other things I'm part of around the web.",
   "items": [
-    {"url": "https://phantom-tale.itch.io/", "title": "Phantom Tale on itch.io", "description": "Play my games and download builds.", "showTitle": true, "image": null},
-    {"url": "https://www.youtube.com/@phantom_taleT", "title": "Phantom Tale on YouTube", "description": "Devlogs, trailers and engine progress.", "showTitle": true, "image": null}
+    {
+      "url": "https://phantom-tale.itch.io/",
+      "title": "Phantom Tale on itch.io",
+      "description": "Play my games and download builds.",
+      "showTitle": true,
+      "image": "screenshots/phantom-tale-itch-io-5f3c00.jpg",
+      "updated": "2026-10-24T14:20:03.017Z"
+    },
+    {
+      "url": "https://www.youtube.com/@phantom_taleT",
+      "title": "Phantom Tale on YouTube",
+      "description": "Devlogs, trailers and engine progress.",
+      "showTitle": true,
+      "image": "screenshots/youtube-com-phantom-talet-860c44.jpg",
+      "updated": "2026-10-24T14:20:07.162Z"
+    }
   ]
 }
